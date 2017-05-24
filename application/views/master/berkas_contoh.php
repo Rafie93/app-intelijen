@@ -12,6 +12,11 @@
       $("#file_info").val(info.name);
     });
   });
+  function select_data($id,$nama,$file){
+        $("#jenis_laporan").val($nama);
+        $('#edit').val($id);
+        $('#file_upload').val($file);
+    }
   function batal () {
      $("#penanggung").val('');
      $("#penjelasan").val('');
@@ -77,7 +82,8 @@
                          <label  for="">JENIS LAPORAN</label>
                       </div>
                         <div class="col-md-10">
-                        <select class="select2" id="jenis_laporan" name="jenis_laporan" class="form-control">
+                        <select id="jenis_laporan" name="jenis_laporan" class="form-control">
+                        <option value="">Pilih Jenis Laporan</option>
                           <?php 
                           foreach ($jenis as $jn) { ?>
                             <option value="<?= strtolower($jn->menu) ?>"><?= $jn->alias ?></option>
@@ -100,7 +106,7 @@
 
                   </div>
                  
-                    <br><br>
+                    <br><br><br>
                     <div class="input-group">
                         <input type="submit" name="btn-simpan" class="btn btn-info" value="SIMPAN">
                         <input type="reset" name="btn-reset" class="btn btn-default" value="RESET">
@@ -109,7 +115,37 @@
                 </form>
                 </br>
       </div>
-      
+      <div>
+          <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                 <thead>
+                  <tr>
+              <th>NO</th>
+              <th>JENIS LAPORAN</th>
+              <th>BERKAS CONTOH</th>
+              <th>AKSI</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php 
+            $no = 1;
+            foreach ($dt as $row) {?>
+              <tr>
+                <td><?= $no++?></td>
+                <td><?= $row->jenis_laporan ?></td>
+                <td><a href="<?php echo base_url('assets/document/contoh/'.$row->contoh_enk);?>"><?= $row->berkas_contoh ?></a></td>
+                 <td colspan="2">
+              <button  onclick="select_data('<?= $row->id;?>','<?= $row->jenis_laporan?>','<?= $row->berkas_contoh?>')"
+                            class="btn btn-info"><i class="glyphicon glyphicon-edit">edit</i></button>
+                             <a href="<?php echo base_url('master/hapusbidang/'.$row->id) ;?>"
+                              onclick="javascript: return confirm('Anda yakin hapus ?')"
+                              class="btn btn-danger"><i class="glyphicon glyphicon-trash">delete</i></a>
+              </td>
+              </tr>
+            <?}
+            ?>
+          </tbody>
+                </table>
+      </div>
   </div>
 
 </div>

@@ -20,6 +20,7 @@ class Data extends CI_Controller {
 		$data = array(
 			'judul' => $judul, 
 			'sub_judul' => $sub,
+			'jenis_laporan' => $jenis,
 			'url_create' => $url_create,
 			'bidang' => $this->model->getData('bidang'),
 			'row' => $this->model->getData('produk','jenis_laporan',$jenis)
@@ -28,13 +29,22 @@ class Data extends CI_Controller {
 	}
 	public function data_produk_filter()
 	{
+		$mulai = $this->input->post('mulai');
+		$akhir = $this->input->post('akhir');
+		$bidang =  $this->input->post('bidang');
+		$jenis =  $this->input->post('jenis_laporan');
+
+		$judul = $this->input->post('judul');
+		$sub = $this->input->post('sub');
 		$pesan = '';
 		$url_create =  "produk/create/".$jenis."/".$judul."/".$pesan;
 		$data = array(
 			'judul' => $judul, 
+			'jenis_laporan' => $jenis,
 			'sub_judul' => $sub,
 			'url_create' => $url_create,
-			'row' => $this->model->getData('produk','jenis_laporan',$jenis)
+			'bidang' => $this->model->getData('bidang'),
+			'row' => $this->model->rekapData($jenis,$bidang,$mulai,$akhir)
 			);
 		$this->template->admin('produk/data',$data);	
 	}

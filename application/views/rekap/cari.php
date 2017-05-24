@@ -1,6 +1,6 @@
 <script type="text/javascript" charset="utf-8" async defer>
 $().ready(function(){
-    //$("#pilih_go").hide();
+   // $("#pilih_go").hide();
     $("input:radio[name=filter]").change(function() {
             if (this.checked && this.value == 'per_tanggal') {
                 $("#pilih_go").show();
@@ -14,21 +14,21 @@ $().ready(function(){
             }
             else{
                  $("#pilih_go").show();
-                 $("#per_bidang").show();
                  $("#per_tanggal").show();
+                 $("#per_bidang").show();
             }
         });
         //
 });
  </script>
+
  <div class="page-head">
         <!-- BEGIN PAGE TITLE -->
       <div class="page-title">
-             <h1><?= str_replace('%20', ' ', $judul) ?>
-                 <small><?= str_replace('%20', ' ', $sub_judul) ?></small>
-             </h1>
+             <h1><?= str_replace('%20', ' ', $judul)  ?> </h1>
        </div>
 </div>
+
 
  <div class="row">		
     <div class="box col-md-12">
@@ -37,17 +37,17 @@ $().ready(function(){
             <div class="portlet-title">
                 <div class="caption font-dark">
                     <i class="icon-settings font-dark"></i>
-                    <span class="caption-subject bold uppercase"> <?= str_replace('%20', ' ', $judul) ?></span>
+                    <span class="caption-subject bold uppercase"> *PILIH KATEGORI CETAK DAN KEMUDIAN CETAK</span>
                 </div>
 
             </div>
-         <a href="<?= base_url($url_create); ?>" class="btn btn-succes"><i class="glyphicon glyphicon-plus">TAMBAH DATA</i></a>
-         <br><br>
-         <div class="portlet-body">
-                <form role="form" method="post"  action="<?php echo base_url('data/data_produk_filter'); ?>"  class="form-horizontal">
-                  <input type="hidden" name="jenis_laporan" value="<?= $jenis_laporan ?>">
-                  <input type="hidden" name="judul" value="<?= str_replace('%20', ' ', $judul) ?>">
-                  <input type="hidden" name="sub" value="<?=  str_replace('%20', ' ', $sub_judul)  ?>">
+            
+        
+			<!-- FORM INPUT -->
+			
+			 <div class="portlet-body">
+                <form role="form" method="post"  action="<?php echo base_url('rekap/cetak'); ?>"  class="form-horizontal">
+                <input type="hidden" id="jenis_laporan" name="jenis_laporan" value="<?= $jenis_laporan ?>">
                     <div class="form-body">
                 <div class="col-md-12">
                     <div class="col-md-3">
@@ -92,7 +92,7 @@ $().ready(function(){
                 </div>
                 
                      <div class="col-md-3">
-                     <input type="submit" name="btn-simpan" class="btn btn-info form-control" value="FILTER">
+                     <input type="submit" name="btn-simpan" class="btn btn-info form-control" value="CETAK REKAP">
                    </div>
                   
                    
@@ -100,54 +100,11 @@ $().ready(function(){
                
                 </form>
                 </br>
-                </div>
-            </div></br><br>
-         	<table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
-                 <thead>
-                  <tr>
-		        	<th>NO</th>
-		        	<th>NO SURAT</th>
-		        	<th>JUDUL</th>
-                    <th>PRIHAL</th>
-                    <th>TANGGAL</th>
-                    <th>BIDANG</th>
-                    <th>DOWNLOAD</th>
-					<th>AKSI</th>
-				    </tr>
-				    </thead>
-				    <tbody>
-					<?php 
-					$no = 1;
-						foreach ($row as $data) {
-						?>
-						<tr>
-						<th><?= $no++ ?></th>
-                        <th><?= $data->no_surat?></th>
-                        <th><?= $data->judul?></th>
-                        <th><?= $data->prihal?></th>
-                        <th><?= $data->tgl_produk?></th>
-						<th><?= $data->bidang?></th>
-						<th>
-                        <?php 
-                        $i = 1;
-                        $berkas = $this->model->getData('berkas_produk','id_produk',$data->id);
-                        foreach ($berkas as $bk) { ?>
-                          <a href="<?php echo base_url('assets/document/'.$bk->berkas_enk);?>"><?= $i++ . ") " .$bk->berkas?></a>
-                        <?}
-                        ?>    
-                        </th>
-						<th colspan="2">
-              <a  href="<?php echo base_url('produk/editproduk/'.$data->id) ;?>" class="btn btn-info"><i class="glyphicon glyphicon-edit">edit</i></a>
-                             <a href="<?php echo base_url('produk/deleteproduk/'.$data->id) ;?>"
-                              onclick="javascript: return confirm('Anda yakin hapus ?')"
-                              class="btn btn-danger"><i class="glyphicon glyphicon-trash">delete</i></a>
-              </th>
-						</tr>
-							<?
-						}
-					 ?>
-					</tbody>
-    	        	</table>
+			</div>
+		
+    	     <p><i>**CATATAN : "pilih kategori cetak"</i></p>
+
+
          </div>
        	</div>
     </div>

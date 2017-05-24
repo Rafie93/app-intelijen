@@ -22,9 +22,33 @@ class Master extends CI_Controller {
 			'sub_judul' => 'data data penjelasan',
 			'row' => $this->model->getData('penjelasan'),
 			'jenis' => $this->model->getJenis_laporan(),
+			'url_penjelasan' => 'master/data_penjelasan',
 			);
         
 		$this->template->admin('master/penjelasan',$data);	
+	}
+	public function editpenjelasan($id)
+	{
+		$data = array(
+			'judul'=>'PENJELASAN',
+			'sub_judul' => 'data data penjelasan',
+			'row' => $this->model->cek('penjelasan','id',$id)->row(),
+			'jenis' => $this->model->getJenis_laporan(),
+			'url_penjelasan' => 'master/data_penjelasan',
+		);
+        
+		$this->template->admin('master/edit-penjelasan',$data);	
+	}
+	public function data_penjelasan()
+	{
+		$data = array(
+			'judul'=>'DATA PENJELASAN',
+			'sub_judul' => 'data data penjelasan',
+			'dt' => $this->model->getData('penjelasan'),
+			'url_tambah' => 'master/penjelasan',
+			);
+        
+		$this->template->admin('master/data_penjelasan',$data);	
 	}
 	public function bidang()
 	{
@@ -42,6 +66,7 @@ class Master extends CI_Controller {
 			'judul'=>'BERKAS CONTOH',
 			'sub_judul' => 'data data berkas contoh',
 			'jenis' => $this->model->getJenis_laporan(),
+			'dt'	=> $this->model->getData('berkas_contoh'),
 			);
         
 		$this->template->admin('master/berkas_contoh',$data);	
@@ -106,12 +131,38 @@ class Master extends CI_Controller {
 			echo json_encode('Data Penjelasan Sudah Tersimpan');
 		}
 	}
+	public function simpan_bidang()
+	{
+		$edit = $this->input->post('edit');
+		$data = array('bidang'=>$this->input->post('bidang'));
+
+		$cek = $this->model->cek('bidang','bidang',$this->input->post('bidang'));
+		 if ($edit != '' || $edit != null) {
+			$this->model->ubah('bidang','id',$edit,$data);
+			$this->model->notifikasi('Data bidang di Ubah');
+			redirect('master/bidang');
+		}else
+		if ($cek->num_rows() > 0) {
+			$this->model->notifikasi('divisi Sudah Ada');
+			$this->bidang();	
+		}
+		else{
+			$this->model->simpan('bidang',$data);
+			$this->model->notifikasi('Data bidang Tersimpan');
+			redirect('master/bidang');
+		}
+	}
 	//END TAMPIL
 	//MULAI HAPUS
-	public function hapus_pernjelasan($id)
+	public function hapus_penjelasan($id)
 	{
 		$this->model->hapus('penjelasan','id',$id);
 		echo json_encode('Data Penjelasan Terhapus');
+	}
+	public function hapusbidang($id)
+	{
+		$this->model->hapus('bidang','id',$id);
+		echo json_encode('Data Bidang Terhapus');
 	}
 	
 }

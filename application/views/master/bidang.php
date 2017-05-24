@@ -30,12 +30,12 @@
 			<!-- FORM INPUT -->
 			
 			 <div class="portlet-body">
-                <form role="form" method="post" action="<?php echo base_url('master/simpan_supplier'); ?>"  class="form-horizontal">
+                <form role="form" method="post" action="<?php echo base_url('master/simpan_bidang'); ?>"  class="form-horizontal">
                     <div class="form-body">
                     <div class="form-md-line-input">
                         <label for="">BIDANG</label>
                         <input type="hidden" name="edit" id="edit"> 
-                        <input type="text" id="nama" class="form-control" name="nama" value=""placeholder="Masukkan Nama Bidang" required>
+                        <input type="text" id="bidang" class="form-control" name="bidang" value=""placeholder="Masukkan Nama Bidang" required>
                     </div>
                      
                     <br>

@@ -128,7 +128,7 @@
         <!-- FORM INPUT -->
        <div class="portlet-body">
                 <form id="form" role="form" method="post" class="form-horizontal" >
-                <input type="hidden" name="edit" id="edit" value=""> 
+                <input type="hidden" name="edit" id="edit" value="<?= $row->id ?>"> 
              <div class="form-body">
              <div class="form-md-line-input">
                       <div class="col-md-2 ">
@@ -136,6 +136,7 @@
                       </div>
                         <div class="col-md-10">
                         <select class="select2" id="jenis_laporan" name="jenis_laporan" class="form-control">
+                        <option value="<?= $row->jenis_laporan ?>"><?= strtoupper($row->jenis_laporan) ?></option>
                           <?php 
                           foreach ($jenis as $jn) { ?>
                             <option value="<?= strtolower($jn->menu) ?>"><?= $jn->alias ?></option>
@@ -149,7 +150,7 @@
                          <label  for="">PENGERTIAN</label>
                       </div>
                         <div class="col-md-10">
-                      <textarea name="penjelasan" id="penjelasan"></textarea>
+                      <textarea name="penjelasan" id="penjelasan"><?= $row->pengertian ?></textarea>
                         </div>
                     </div>
                     <div class="form-md-line-input">
@@ -157,7 +158,7 @@
                          <label  for="">MATERI</label>
                       </div>
                     <div class="col-md-10">
-                    <textarea name="materi" id="materi"></textarea>
+                    <textarea name="materi" id="materi"><?= $row->materi ?></textarea>
                        </div>
                     
                     </div>
@@ -166,7 +167,7 @@
                          <label  for="">FORMAT</label>
                       </div>
                         <div class="col-md-10">
-                      <textarea name="format" id="format"></textarea>
+                      <textarea name="format" id="format"><?= $row->format ?></textarea>
                         </div>
                     </div>
                      <div class="form-md-line-input">
@@ -174,7 +175,7 @@
                          <label  for="">DISTRIBUSI</label>
                       </div>
                         <div class="col-md-10">
-                      <textarea name="distribusi" id="distribusi"></textarea>
+                      <textarea name="distribusi" id="distribusi"><?= $row->distribusi ?></textarea>
                         </div>
                     </div>
                       <div class="form-md-line-input">
@@ -182,7 +183,7 @@
                         <label for="">PENANGGUNG JAWAB</label>
                         </div>
                            <div class="col-md-10">
-                        <input type="text" id="penanggung" class="form-control" name="penanggung" required value=""placeholder="Masukkan Penanggung Jawab" required>
+                        <input type="text" id="penanggung" class="form-control" name="penanggung" required value="<?= $row->penanggung_jawab ?>"placeholder="Masukkan Penanggung Jawab" required>
                     </div>
                     
 

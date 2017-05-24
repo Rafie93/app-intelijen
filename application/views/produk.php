@@ -108,7 +108,7 @@
                                     </div>
                                     <div class="desc"><?= $judul?></div>
                                 </div>
-                                <a class="more" href="javascript:;"> PROSES
+                                <a class="more" href="<?= base_url($url_rekap); ?>"> PROSES
                                     <i class="m-icon-swapright m-icon-white"></i>
                                 </a>
                             </div>

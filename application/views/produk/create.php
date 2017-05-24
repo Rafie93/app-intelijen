@@ -53,11 +53,7 @@
 		    height: '300px',
 		    paste_data_images: true,
 		    init_instance_callback: "insert_contents",
-		     setup: function (editor) {
-          editor.on('change', function () {
-              tinymce.triggerSave();
-          });
-        },
+		    
 		    plugins: [
 		      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
 		      "searchreplace wordcount visualblocks visualchars code fullscreen",
@@ -202,7 +198,7 @@
 					</div>
 					  <div class="form-md-line-input">
                         <label for="">CONTOH <?= $judul ?></label>
-                        <input type="button" value="downnload">
+                        <a href="<?php echo base_url('assets/document/contoh/'.$berkas_contoh);?>">DOWNLOAD</a>
                     </div>
                     <div class="form-md-line-input" id="d_isi">
                         <label for="">ISI</label>

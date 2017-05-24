@@ -15,15 +15,26 @@ class Produk extends CI_Controller {
 	}
 	public function create($jenis=null,$lap=null,$pesan=null)
 	{
-
+		$tahun = date('Y');
 		$lap = str_replace('%20', ' ', $lap);
+		$surat = $this->model->no_generate($jenis,$tahun);
+		$pesan = str_replace('%20', ' ', $pesan);
+		$pesan = str_replace("-", "/", $pesan);
+		$berkas_contoh = $this->model->cek('berkas_contoh','jenis_laporan',$jenis);
+		$file = "";
+		if ($berkas_contoh->num_rows() > 0) {
+			$berkas_contoh = $berkas_contoh->row();
+			$file = $berkas_contoh->contoh_enk;
+		}
+		
 		$data = array(
 			'pesan' => $pesan,
 			'judul'=> $lap,
 			'bidang' => $this->model->getData('bidang'),
 			'jenis'=>$jenis,
 			'lap' =>$lap,
-			'no_surat'=> "001/LI/V/2017",
+			'no_surat'=> $surat,
+			'berkas_contoh' => $file,
 			'post_url' => 'produk/do_upload'
 			);
         
@@ -39,6 +50,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/lapharintel/".$judul."/"."Data Laphar Intelijen",
 			'url_penjelasan' =>"data/data_penjelasan/lapharintel/".$judul."/"."Penjelasan Laphar Intelijen",
+			'url_rekap' => "rekap/form/lapharintel/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -53,6 +65,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/lapharsus/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/lapharsus/".$judul."/"."Penjelasan lapharsus",
+			'url_rekap' => "rekap/form/lapharsus/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -67,6 +80,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/lapinformasi/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/lapinformasi/".$judul."/"."Penjelasan lapinformasi",
+			'url_rekap' => "rekap/form/lapinformasi/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -81,6 +95,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/infokhusus/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/infokhusus/".$judul."/"."Penjelasan infokhusus",
+			'url_rekap' => "rekap/form/infokhusus/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -95,6 +110,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/lapkhusus/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/lapkhusus/".$judul."/"."Penjelasan lapkhusus",
+			'url_rekap' => "rekap/form/lapkhusus/".$judul,
 			);
 		$this->template->admin('produk',$data);	
 	}
@@ -107,6 +123,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/lapatensia/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/lapatensia/".$judul."/"."Penjelasan lapatensia",
+			'url_rekap' => "rekap/form/lapatensia/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -120,6 +137,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/telaahintelijen/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/telaahintelijen/".$judul."/"."Penjelasan telaahintelijen",
+			'url_rekap' => "rekap/form/telaahintelijen/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -133,6 +151,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/perkiraankhusus/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/perkiraankhusus/".$judul."/"."Penjelasan perkiraankhusus",
+			'url_rekap' => "rekap/form/perkiraankhusus/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -147,6 +166,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/perkiraancepat/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/perkiraancepat/".$judul."/"."Penjelasan perkiraancepat",
+			'url_rekap' => "rekap/form/perkiraancepat/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -161,6 +181,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/perkiraankontinjensi/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/perkiraankontinjensi/".$judul."/"."Penjelasan perkiraankontinjensi",
+			'url_rekap' => "rekap/form/perkiraankontinjensi/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -175,7 +196,7 @@ class Produk extends CI_Controller {
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/lapintelijen/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/lapintelijen/".$judul."/"."Penjelasan lapintelijen",
-
+			'url_rekap' => "rekap/form/lapintelijen/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -188,6 +209,7 @@ class Produk extends CI_Controller {
 			'judul'=> $judul,
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/memointelijen/".$judul."/"."Data",
+			'url_rekap' => "rekap/form/memointelijen/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -201,6 +223,7 @@ class Produk extends CI_Controller {
 			'judul'=> $judul,
 			'url_create' => $url_create,
 			'url_data' => "data/data_produk/notaintelijen/".$judul."/"."Data",
+			'url_rekap' => "rekap/form/notaintelijen/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -213,6 +236,20 @@ class Produk extends CI_Controller {
 			'url_create' => "produk/create/inteldasar/".$judul."/".$pesan,
 			'url_data' => "data/data_produk/inteldasar/".$judul."/"."Data",
 			'url_penjelasan' =>"data/data_penjelasan/inteldasar/".$judul."/"."Penjelasan inteldasar",
+			'url_rekap' => "rekap/form/inteldasar/".$judul,
+			);
+        
+		$this->template->admin('produk',$data);	
+	}
+	public function perkiraanintelkeamanan($pesan=null)
+	{
+		$judul = 'PERKIRAAN INTELIJEN KEAMANAN';
+		$data = array(
+			'judul'=> $judul,
+			'url_create' => "produk/create/perkiraanintelkeamanan/".$judul."/".$pesan,
+			'url_data' => "data/data_produk/perkiraanintelkeamanan/".$judul."/"."Data",
+			'url_penjelasan' =>"data/data_penjelasan/perkiraanintelkeamanan/".$judul."/"."Penjelasan perkiraanintelkeamanan",
+			'url_rekap' => "rekap/form/perkiraanintelkeamanan/".$judul,
 			);
         
 		$this->template->admin('produk',$data);	
@@ -225,10 +262,14 @@ class Produk extends CI_Controller {
 		$edit = $this->input->post('edit');
 		
 		$no_surat =$this->input->post('no_surat');
+		$pisah_surat = explode('/', $no_surat);
+		$no = $pisah_surat[0];
 		$bidang =$this->input->post('bidang');
 		$jenis_laporan =$this->input->post('jenis_laporan');
 		$status = $this->input->post('status');
 		$tgl_pembuatan = $this->input->post('tgl_pembuatan');
+		$pisah_tgl = explode('-', $tgl_pembuatan);
+		$tahun = $pisah_tgl[0];
 		$prihal = $this->input->post('prihal');
 		$pembuatan = $this->input->post('pembuatan');
 		$isi = $this->input->post('isi');
@@ -250,6 +291,7 @@ class Produk extends CI_Controller {
 
 
 		$this->model->simpan('produk',$data);
+		$this->model->save_no($jenis_laporan,$tahun,$no);
 
 		$jum_berkas = $this->input->post('jum_berkas');
 		$id_produk = $this->model->get_id_produk()->ID;
@@ -277,6 +319,7 @@ class Produk extends CI_Controller {
 
 	     	$this->model->simpan('berkas_produk',$data_berkas);
 		}
-		redirect('produk/'.$jenis_laporan."/"."Data Sudah Tersimpan");
+		$pesan = str_replace("/", "-", $no_surat);
+		redirect('produk/create/'.$jenis_laporan."/".strtoupper($jenis_laporan)."/"."Data Sudah Tersimpan Ke No Surat ".$pesan);
   }    
 }
